@@ -1,4 +1,4 @@
-package com.galvanize.gmdbmovies.controllers;
+package com.galvanize.gmdbmovies.v1.controllers;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

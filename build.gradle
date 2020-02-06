@@ -34,6 +34,12 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    compile 'io.swagger:swagger-annotations:1.6.0'
+    compile 'io.springfox:springfox-swagger2:2.9.2'
+    compile 'io.springfox:springfox-swagger-ui:2.9.2'
+    compile 'io.swagger:swagger-models:1.6.0'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+    compile 'org.modelmapper:modelmapper:2.3.6'
 }
 
 test {
