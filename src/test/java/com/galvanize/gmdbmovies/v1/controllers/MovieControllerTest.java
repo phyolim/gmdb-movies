@@ -6,8 +6,10 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
@@ -20,10 +22,19 @@ class MovieControllerTest {
 
     @Test
     public void testMoviesEndpointExist() throws Exception {
-        String url = "/movies";
+        String url = "/v1/movies";
         mvc.perform(get(url))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetMovieById() throws Exception {
+        String url = "/v1/movies/67";
+        mvc.perform(get(url))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("67")));
     }
 
 }
