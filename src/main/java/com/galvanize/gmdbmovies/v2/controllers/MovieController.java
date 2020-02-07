@@ -1,14 +1,17 @@
-package com.galvanize.gmdbmovies.v1.controllers;
+package com.galvanize.gmdbmovies.v2.controllers;
 
 import com.galvanize.gmdbmovies.models.Movie;
 import com.galvanize.gmdbmovies.services.MovieService;
-import com.galvanize.gmdbmovies.v1.dto.MovieDto;
+import com.galvanize.gmdbmovies.v2.dto.MovieDto;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +21,8 @@ import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 
 @Api(tags = "movies controller")
-@CrossOrigin(origins = "*")
-@RestController("MovieControllerV1")
-@RequestMapping("/v1/movies")
+@RestController("MovieControllerV2")
+@RequestMapping("/v2/movies")
 public class MovieController {
 
     final
@@ -42,7 +44,7 @@ public class MovieController {
     }
 
     @GetMapping("/{movieId}")
-    public Optional<Movie> getMovieById(@PathVariable Long movieId) {
+    public Optional<Movie> getMovieById(@PathVariable Long movieId){
         return movieService.findByMovieId(movieId);
     }
 

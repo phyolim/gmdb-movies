@@ -1,25 +1,39 @@
-package com.galvanize.gmdbmovies.v1.config;
+package com.galvanize.gmdbmovies.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
 @ComponentScan
 @EnableSwagger2
 public class SwaggerConfig {
     @Bean
-    public Docket api() {
+    public Docket movieApiV1() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("movies-api-1")
                 .select()
                 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build();
+                .paths(regex("/v1/movies/*"))
+                .build()
+                .apiInfo(new ApiInfoBuilder().version("1").title("Movies API").build());
+    }
+
+    @Bean
+    public Docket movieApiV2() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("movies-api-2")
+                .select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(regex("/v2/movies/*"))
+                .build().apiInfo(new ApiInfoBuilder().version("2").title("Movies API").build());
     }
 }
 

@@ -1,4 +1,4 @@
-package com.galvanize.gmdbmovies.v1.config;
+package com.galvanize.gmdbmovies.config;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
