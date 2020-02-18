@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class MovieDto {
     private Long movieId;
-    private String imdbid;
+    private String imdbId;
     private String actors;
     private String director;
     private String title;
