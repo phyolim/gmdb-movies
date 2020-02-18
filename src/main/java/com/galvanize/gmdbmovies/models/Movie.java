@@ -20,4 +20,8 @@ public class Movie {
     private String title;
     private String year;
     private Date released;
+
+    public Movie(long l, String abcd, String joe, String jack, String hello, String s, Date date) {
+        this.movieId=l;
+    }
 }

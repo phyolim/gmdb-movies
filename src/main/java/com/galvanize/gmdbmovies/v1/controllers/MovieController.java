@@ -10,8 +10,8 @@ import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
@@ -41,13 +41,29 @@ public class MovieController {
                 .collect(Collectors.toList());
     }
 
+    @PostMapping
+    public void createNewMovie(@RequestBody MovieDto movie) throws ParseException {
+        movieService.createNewMovie(convertToEntity(movie));
+    }
+
     @GetMapping("/{movieId}")
-    public Optional<Movie> getMovieById(@PathVariable Long movieId) {
-        return movieService.findByMovieId(movieId);
+    public MovieDto getMovieById(@PathVariable Long movieId) {
+
+        if (movieService.findByMovieId(movieId).isPresent()) {
+            return convertToDto(movieService.findByMovieId(movieId).get());
+        } else {
+            return new MovieDto();
+        }
+
     }
 
     private MovieDto convertToDto(Movie movie) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(movie, MovieDto.class);
+    }
+
+    private Movie convertToEntity(MovieDto movieDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(movieDto, Movie.class);
     }
 }

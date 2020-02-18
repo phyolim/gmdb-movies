@@ -13,4 +13,9 @@ public class MovieDto {
     private String title;
     private String year;
     private Date released;
+
+    public MovieDto(){
+    }
+    public MovieDto(long l, String imdbId, String actors, String director, String title, String year, Date releaseDate) {
+    }
 }

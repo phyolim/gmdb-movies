@@ -2,6 +2,7 @@ package com.galvanize.gmdbmovies.services;
 
 import com.galvanize.gmdbmovies.models.Movie;
 import com.galvanize.gmdbmovies.repositories.MovieJpaRepository;
+import com.galvanize.gmdbmovies.v1.dto.MovieDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,10 @@ public class MovieService {
 
     public List<Movie> findAll() {
         return movieJpaRepository.findAll();
+    }
+
+    public void createNewMovie(Movie movie) {
+        movieJpaRepository.save(movie);
     }
 
     public Optional<Movie> findByMovieId(Long id) {
