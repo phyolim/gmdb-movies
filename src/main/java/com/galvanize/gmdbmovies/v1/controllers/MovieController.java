@@ -8,9 +8,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,9 +23,11 @@ import static javax.servlet.http.HttpServletResponse.SC_OK;
 @Api(tags = "movies controller")
 @CrossOrigin(origins = "*")
 @RestController("MovieControllerV1")
-@RequestMapping("/v1/movies")
+@RequestMapping(value = "/v1/movies")
+
 public class MovieController {
 
+    private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
     final
     MovieService movieService;
 
@@ -36,25 +41,19 @@ public class MovieController {
             @ApiResponse(code = SC_OK, message = "ok"),
             @ApiResponse(code = SC_BAD_REQUEST, message = "An unexpected error occurred")
     })
-    public List<MovieDto> getAllMovies() {
-        return movieService.findAll().stream().map(this::convertToDto)
-                .collect(Collectors.toList());
+    public ResponseEntity<List<MovieDto>> getAllMovies() {
+        return new ResponseEntity<>(movieService.findAll().stream().map(this::convertToDto)
+                .collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @PostMapping
-    public void createNewMovie(@RequestBody MovieDto movie) throws ParseException {
+    public void createNewMovie(@RequestBody MovieDto movie) {
         movieService.createNewMovie(convertToEntity(movie));
     }
 
     @GetMapping("/{movieId}")
     public MovieDto getMovieById(@PathVariable Long movieId) {
-
-        if (movieService.findByMovieId(movieId).isPresent()) {
-            return convertToDto(movieService.findByMovieId(movieId).get());
-        } else {
-            return new MovieDto();
-        }
-
+        return convertToDto(movieService.findByMovieId(movieId).orElse(new Movie()));
     }
 
     private MovieDto convertToDto(Movie movie) {
